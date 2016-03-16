@@ -104,6 +104,14 @@ gulp.task('js', ['lint'], function() {
         .pipe(browserSync.stream());
 });
 
+//Permite desplegar la aplicacion en el servidor de produccion
+//Supone que el servidor en el que se va a ejecutar esta en local
+//para conectar a un servidor remoto, usariamos gulp-rsync
+gulp.task('deploy', function() {
+    gulp.src('dist/**')
+        .pipe(gulp.dest('C:\\xampp\\htdocs\\pec01_p5'));
+});
+
 
 //Agrega los watch para los cambios en los ficheros. Antes ejecuta todas las tareas
 //y lanza browser-sync
