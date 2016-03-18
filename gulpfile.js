@@ -49,30 +49,29 @@ gulp.task('copyImg', function() {
 });
 
 
-//gulp.task('browser-sync', function(){
-//    browserSync.init({
-//        logLevel: "info",
-//        browser: ["google chrome", "firefox"],
-//        proxy: "localhost:80",
- //       startPath: "/PEC01_P5/dist/",
-//        startPath: "./dist/"
-//        baseDir:"./dist"
-//    });
-
-//});
-
-
-//Inicia browser-sync
+//Inicia browser-sync utilizando un proxy con el servidor local en el puerto 80
+//Presuponemos que el proyecto se está almacenando
 gulp.task('browser-sync', function(){
-    // browserSync.init(["./src/css/*.css", "./src/js/*.js"], {
-//    browserSync.init(["./dist/css/*.css", "./dist/js/*.js", "./dist/*.html"], {
-        browserSync.init({
-        server:{
-          //
-            baseDir:"./dist"
-        }
+    browserSync.init({
+        logLevel: "info",
+        browser: ["google chrome", "firefox"],
+        proxy: "localhost:80",
+        startPath: "/PEC01_P5/dist/"
+
     });
+
 });
+
+
+//Inicia browser-sync sin utilizar el servidor local
+//gulp.task('browser-sync', function(){
+//        browserSync.init({
+//        server:{
+//
+//            baseDir:"./dist"
+//        }
+//    });
+//});
 
 
 //Genera el css a partir de sass
@@ -97,7 +96,7 @@ gulp.task('lint', function() {
 //Concatena todos los ficheros javascritp en uno solo y lo minimiza.
 //Antes de ejecutarse, lanza la tarea lint
 gulp.task('js', ['lint'], function() {
-    return gulp.src([srcPaths.scripts+'main.js', srcPaths.scripts+'extra.js'])
+    return gulp.src([srcPaths.scripts+'**/*.js'])
         .pipe(concat('all.min.js'))
         .pipe(uglify())
         .pipe(gulp.dest(distPaths.scripts))
@@ -108,8 +107,8 @@ gulp.task('js', ['lint'], function() {
 //Supone que el servidor en el que se va a ejecutar esta en local
 //para conectar a un servidor remoto, usariamos gulp-rsync
 gulp.task('deploy', function() {
-    gulp.src('dist/**')
-        .pipe(gulp.dest('C:\\xampp\\htdocs\\pec01_p5'));
+    gulp.src('dist/**/*')
+        .pipe(gulp.dest('C:\\xampp\\htdocs\\pec01_p5\\dist'));
 });
 
 
